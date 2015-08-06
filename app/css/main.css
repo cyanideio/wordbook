@@ -1,0 +1,19 @@
+body {
+  background: #eee;
+}
+
+.container {
+  background: #fff;
+  width: 960px;
+  margin: 0 auto;
+  padding: 50px;
+  box-shadow: 10px 10px 5px #888;
+}
+
+.main-header {
+  margin: 20px 0;
+}
+
+.main-footer {
+  margin: 20px 0;
+}
