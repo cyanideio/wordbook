@@ -1,7 +1,7 @@
-# backbone-boilerplate
-Backbone boilerplate for creating backbone applications with ease.
+# backbone-7
+Backbone.js under Framework7 \w Coffeescript, Gulp, Browserify, Sass
 
-## Using boilerplate
+## Getting Started
 
 ####Install global gulp if not yet present.
 
@@ -10,5 +10,7 @@ Backbone boilerplate for creating backbone applications with ease.
 ####Install and run
 
 `npm install`
+
+`gulp fetchStatic`
 
 `npm start`
