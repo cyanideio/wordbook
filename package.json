@@ -1,13 +1,13 @@
 {
-  "name": "backbone-boilerplate",
+  "name": "backbone-7",
   "version": "0.0.1",
-  "description": "Boilerplate for creating new backbone apps",
+  "description": "Boilerplate for creating mobile app",
   "main": "index.js",
   "scripts": {
     "start": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Jaan Lambert",
+  "author": "Yao Yuan",
   "license": "MIT",
   "devDependencies": {
     "backbone": "^1.2.1",
@@ -17,11 +17,12 @@
     "coffee-script": "^1.9.3",
     "coffeeify": "^1.1.0",
     "gulp": "^3.9.0",
+    "gulp-sass":"*",
     "gulp-browserify": "^0.5.1",
     "gulp-concat": "^2.6.0",
     "handlebars": "^3.0.3",
-    "hbsfy": "^2.2.1",
-    "jquery": "^2.1.4",
-    "underscore": "^1.8.3"
+    "hbsfy": "*",
+    "jquery": "*",
+    "underscore": "*"
   }
 }
