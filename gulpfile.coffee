@@ -14,39 +14,12 @@ fs = require 'fs'
 util = require 'util'
 exec = require('child_process').exec
 
-# HELPERS
-# Download Function
-download = (url, dest, cb) ->
-  file = fs.createWriteStream(dest)
-  request = https.get url, (response) ->
-    response.pipe file
-    file.on 'finish', ->
-      file.close cb
-      # close() is async, call cb after close completes.
-  .on 'error', (err) ->
-    # Handle errors
-    fs.unlink dest
-    # Delete the file async. (But we don't check the result)
-    if cb then cb err.message
-
-# Base CSS URLs for template
-CSS_FRAMEWORKS = 
-  # Framework 7 Template
-  'framework7' : 
-    'base' : 'https://raw.githubusercontent.com/nolimits4web/Framework7/master/dist/css/'
-    'files' : ['framework7.ios.colors.min.css', 'framework7.ios.min.css', 'framework7.material.colors.min.css', 'framework7.material.min.css']
-
-JS_LIBS = [
-  'madrobby/zepto', 
-]
-
-CSS_BASE = CSS_FRAMEWORKS.framework7
-
-paths =
-  scripts: ['app/**/*.coffee']
-  html : ['app/**/*.html', 'app/**/*.hbs']
-  styles : ['app/**/*.css','app/**/*.ttf','app/**/*.woff']
-  styles_sass : ['app/**/*.sass']
+download = require './utility/download'
+paths = require('./utility/config').paths
+JS_LIBS = require('./utility/config').JS_LIBS
+CSS_FRAMEWORKS = require('./utility/config').CSS_FRAMEWORKS
+BOWER_ROOT = require('./utility/config').BOWER_ROOT
+NON_NPM_PKG = require('./utility/config').NON_NPM_PKG
 
 gulp.task 'fetchStatic', ->
   for file in CSS_BASE.files
@@ -67,10 +40,10 @@ gulp.task 'browserify', ->
     bare: false
     header: true
   bundle.transform hbsfy
-  bundle.add './bower_components/zepto/src/zepto.js'
-  bundle.add './bower_components/zepto/src/deferred.js'
-  bundle.add './bower_components/zepto/src/callbacks.js'
-  bundle.add './bower_components/zepto/src/event.js'
+  for pkg in NON_NPM_PKG
+    pkgname = pkg.name
+    for comp in pkg.components
+      bundle.add "#{BOWER_ROOT}#{pkgname}/src/#{comp}.js"
   bundle.add './app/main.coffee'
   bundle.bundle()
   .pipe source 'bundle.js'
