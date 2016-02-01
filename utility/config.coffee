@@ -20,5 +20,3 @@ exports.NON_NPM_PKG = [
 exports.BOWER_ROOT = './bower_components/'
 exports.paths = paths
 exports.JS_LIBS = JS_LIBS
-exports.CSS_BASE = CSS_FRAMEWORKS.framework7
-exports.CSS_FRAMEWORKS = CSS_FRAMEWORKS
