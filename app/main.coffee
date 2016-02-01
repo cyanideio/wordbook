@@ -10,14 +10,14 @@ ContentView =  require "./core/content/content-view.coffee"
 app = new Backbone.Marionette.Application()
 
 app.addInitializer (options) ->
-    # AppLayout is bound to body element so we don't need to implicitly tell it
-    # to show in some element. It's done automatically on initialization
-    app.root = new AppLayout()
-    app.root.getRegion('header').show(new HeaderView())
-    app.root.getRegion('footer').show(new FooterView())
-    app.root.getRegion('content').show(new ContentView())
+  # AppLayout is bound to body element so we don't need to implicitly tell it
+  # to show in some element. It's done automatically on initialization
+  app.root = new AppLayout()
+  app.root.getRegion('header').show(new HeaderView())
+  app.root.getRegion('footer').show(new FooterView())
+  app.root.getRegion('content').show(new ContentView())
 
 
 $(document).ready ->
-    console.log 'hello'
-    app.start()
+  console.log 'hello'
+  app.start()
