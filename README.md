@@ -14,3 +14,7 @@ Backbone.js under Framework7 \w Coffeescript, Gulp, Browserify, Sass
 `gulp fetchStatic`
 
 `npm start`
+
+
+## License
+Backbone-7 is distributed under [MIT license](http://mutedsolutions.mit-license.org/).
