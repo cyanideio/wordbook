@@ -50,16 +50,6 @@ gulp.task 'fetchStatic', ->
     download "#{CSS_BASE.base}#{file}", "app/css/#{file}", ->
       console.log "#Synced"
 
-# gulp.task 'browserify', ->
-#   gulp.src 'app/main.coffee', read: false
-#     .pipe browserify
-#       debug: true
-#       transform: ['coffeeify', 'hbsfy']
-#       extension: ['.coffee']
-#     .pipe concat 'bundle.js'
-#     .pipe gulp.dest 'dist/js'
-#     .pipe browserSync.reload( stream: true )
-
 gulp.task 'browserify', ->
   bundle = browserify
     extensions: ['.coffee']
