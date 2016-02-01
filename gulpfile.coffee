@@ -9,24 +9,18 @@ coffeeify = require 'coffeeify'
 hbsfy = require('hbsfy').configure
   extensions :['hbs']
 
-download = require('./utility/download').download
 paths = require('./utility/config').paths
 JS_LIBS = require('./utility/config').JS_LIBS
-CSS_FRAMEWORKS = require('./utility/config').CSS_FRAMEWORKS
-CSS_BASE = require('./utility/config').CSS_BASE
 BOWER_ROOT = require('./utility/config').BOWER_ROOT
 NON_NPM_PKG = require('./utility/config').NON_NPM_PKG
 
-gulp.task 'fetchStatic', ->
-  for file in CSS_BASE.files
-    console.log "Download #{file} starts"
-    download "#{CSS_BASE.base}#{file}", "app/css/#{file}", ->
-      console.log "#Synced"
-
+gulp.task 'initialize', ->
   bower.commands
     .install JS_LIBS, 
       save: true
     .on 'end', (installed)->
+      gulp.src paths.base_css
+        .pipe gulp.dest 'app/css'
       console.log installed
 
 gulp.task 'browserify', ->

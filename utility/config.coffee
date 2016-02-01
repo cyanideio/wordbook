@@ -1,18 +1,12 @@
-# Base CSS URLs for template
-CSS_FRAMEWORKS = 
-  # Framework 7 Template
-  'framework7' : 
-    'base' : 'https://raw.githubusercontent.com/nolimits4web/Framework7/master/dist/css/'
-    'files' : ['framework7.ios.colors.min.css', 'framework7.ios.min.css', 'framework7.material.colors.min.css', 'framework7.material.min.css']
-
-JS_LIBS = [
-  'madrobby/zepto', 
-]
-
+JS_LIBS = ['madrobby/zepto', 'framework7']
 
 paths =
   scripts: ['app/**/*.coffee']
   html : ['app/**/*.html', 'app/**/*.hbs']
+  base_css : [
+    'bower_components/Framework7/dist/css/framework7.ios.colors.min.css',
+    'bower_components/Framework7/dist/css/framework7.ios.min.css'
+  ]
   styles : ['app/**/*.css','app/**/*.ttf','app/**/*.woff']
   styles_sass : ['app/**/*.sass']
 

@@ -11,7 +11,7 @@ Backbone.js under Framework7 \w Coffeescript, Gulp, Browserify, Sass
 
 `npm install`
 
-`gulp fetchStatic`
+`gulp initialize`
 
 `npm start`
 
