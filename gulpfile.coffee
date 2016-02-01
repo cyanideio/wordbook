@@ -1,5 +1,6 @@
 gulp = require 'gulp'
 sass = require 'gulp-sass'
+bower = require 'bower'
 browserSync = require 'browser-sync'
 
 source = require 'vinyl-source-stream'
@@ -35,6 +36,10 @@ CSS_FRAMEWORKS =
     'base' : 'https://raw.githubusercontent.com/nolimits4web/Framework7/master/dist/css/'
     'files' : ['framework7.ios.colors.min.css', 'framework7.ios.min.css', 'framework7.material.colors.min.css', 'framework7.material.min.css']
 
+JS_LIBS = [
+  'madrobby/zepto', 
+]
+
 CSS_BASE = CSS_FRAMEWORKS.framework7
 
 paths =
@@ -49,6 +54,12 @@ gulp.task 'fetchStatic', ->
     download "#{CSS_BASE.base}#{file}", "app/css/#{file}", ->
       console.log "#Synced"
 
+  bower.commands
+    .install JS_LIBS, 
+      save: true
+    .on 'end', (installed)->
+      console.log installed
+
 gulp.task 'browserify', ->
   bundle = browserify
     extensions: ['.coffee']
@@ -56,6 +67,10 @@ gulp.task 'browserify', ->
     bare: false
     header: true
   bundle.transform hbsfy
+  bundle.add './bower_components/zepto/src/zepto.js'
+  bundle.add './bower_components/zepto/src/deferred.js'
+  bundle.add './bower_components/zepto/src/callbacks.js'
+  bundle.add './bower_components/zepto/src/event.js'
   bundle.add './app/main.coffee'
   bundle.bundle()
   .pipe source 'bundle.js'
