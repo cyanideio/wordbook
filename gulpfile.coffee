@@ -1,16 +1,20 @@
 gulp = require 'gulp'
 sass = require 'gulp-sass'
-browserify = require 'gulp-browserify'
 concat = require 'gulp-concat'
 browserSync = require 'browser-sync'
+
+source = require 'vinyl-source-stream'
+browserify = require 'browserify'
+coffeeify = require 'coffeeify'
+hbsfy = require('hbsfy').configure
+  extensions :['hbs']
+
 https = require 'https'
 fs = require 'fs'
-
 util = require 'util'
 exec = require('child_process').exec
 
 # HELPERS
-
 # Download Function
 download = (url, dest, cb) ->
   file = fs.createWriteStream(dest)
@@ -46,15 +50,28 @@ gulp.task 'fetchStatic', ->
     download "#{CSS_BASE.base}#{file}", "app/css/#{file}", ->
       console.log "#Synced"
 
+# gulp.task 'browserify', ->
+#   gulp.src 'app/main.coffee', read: false
+#     .pipe browserify
+#       debug: true
+#       transform: ['coffeeify', 'hbsfy']
+#       extension: ['.coffee']
+#     .pipe concat 'bundle.js'
+#     .pipe gulp.dest 'dist/js'
+#     .pipe browserSync.reload( stream: true )
+
 gulp.task 'browserify', ->
-  gulp.src 'app/main.coffee', read: false
-    .pipe browserify
-      debug: true
-      transform: ['coffeeify', 'hbsfy']
-      extension: ['.coffee']
-    .pipe concat 'bundle.js'
-    .pipe gulp.dest 'dist/js'
-    .pipe browserSync.reload( stream: true )
+  bundle = browserify
+    extensions: ['.coffee']
+  bundle.transform coffeeify,
+    bare: false
+    header: true
+  bundle.transform hbsfy
+  bundle.add './app/main.coffee'
+  bundle.bundle()
+  .pipe source 'bundle.js'
+  .pipe gulp.dest 'dist/js'
+  .pipe browserSync.reload( stream: true )
 
 gulp.task 'copyHtml', ->
   gulp.src paths.html

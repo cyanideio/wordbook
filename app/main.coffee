@@ -19,4 +19,5 @@ app.addInitializer (options) ->
 
 
 $(document).ready ->
+    console.log 'hello'
     app.start()
