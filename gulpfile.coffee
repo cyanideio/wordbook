@@ -1,6 +1,5 @@
 gulp = require 'gulp'
 sass = require 'gulp-sass'
-concat = require 'gulp-concat'
 browserSync = require 'browser-sync'
 
 source = require 'vinyl-source-stream'
