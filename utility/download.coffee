@@ -1,3 +1,6 @@
+
+https = require 'https'
+fs = require 'fs'
 # HELPERS
 # Download Function
 download = (url, dest, cb) ->

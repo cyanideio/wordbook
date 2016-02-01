@@ -9,15 +9,11 @@ coffeeify = require 'coffeeify'
 hbsfy = require('hbsfy').configure
   extensions :['hbs']
 
-https = require 'https'
-fs = require 'fs'
-util = require 'util'
-exec = require('child_process').exec
-
-download = require './utility/download'
+download = require('./utility/download').download
 paths = require('./utility/config').paths
 JS_LIBS = require('./utility/config').JS_LIBS
 CSS_FRAMEWORKS = require('./utility/config').CSS_FRAMEWORKS
+CSS_BASE = require('./utility/config').CSS_BASE
 BOWER_ROOT = require('./utility/config').BOWER_ROOT
 NON_NPM_PKG = require('./utility/config').NON_NPM_PKG
 
@@ -36,6 +32,7 @@ gulp.task 'fetchStatic', ->
 gulp.task 'browserify', ->
   bundle = browserify
     extensions: ['.coffee']
+  bundle.ignore 'jquery'
   bundle.transform coffeeify,
     bare: false
     header: true

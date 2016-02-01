@@ -1,4 +1,5 @@
 Backbone = require "backbone"
+Backbone.$ = window.$
 Backbone.Marionette = require "backbone.marionette"
 
 AppLayout = require "./core/app-layout.coffee"
