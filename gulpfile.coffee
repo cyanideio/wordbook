@@ -14,6 +14,7 @@ JS_LIBS = require('./utility/config').JS_LIBS
 BOWER_ROOT = require('./utility/config').BOWER_ROOT
 NON_NPM_PKG = require('./utility/config').NON_NPM_PKG
 
+# Download Bower Components
 gulp.task 'initialize', ->
   bower.commands
     .install JS_LIBS, 
@@ -23,6 +24,7 @@ gulp.task 'initialize', ->
         .pipe gulp.dest 'app/css'
       console.log installed
 
+# Browserify
 gulp.task 'browserify', ->
   bundle = browserify
     extensions: ['.coffee']
@@ -41,11 +43,13 @@ gulp.task 'browserify', ->
   .pipe gulp.dest 'dist/js'
   .pipe browserSync.reload( stream: true )
 
+# Copy HTML Files
 gulp.task 'copyHtml', ->
   gulp.src paths.html
     .pipe gulp.dest 'dist'
     .pipe browserSync.reload( stream: true )
 
+# Compile SASS
 gulp.task 'sass', ->
   gulp.src paths.styles_sass
     .pipe sass( outputStyle: 'compressed' )
@@ -53,11 +57,13 @@ gulp.task 'sass', ->
     .pipe gulp.dest 'dist'
     .pipe browserSync.reload( stream: true )
 
+# Copy Original Files
 gulp.task 'copyCss', ->
   gulp.src paths.styles
     .pipe gulp.dest 'dist'
     .pipe browserSync.reload( stream: true )
 
+# Watch Changes
 gulp.task 'watch', ->
   gulp.watch paths.scripts, ['browserify']
   gulp.watch paths.html, ['copyHtml', 'browserify']
