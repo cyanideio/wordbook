@@ -7,13 +7,13 @@ paths =
     'bower_components/Framework7/dist/css/framework7.ios.colors.min.css',
     'bower_components/Framework7/dist/css/framework7.ios.min.css'
   ]
-  styles : ['app/**/*.css','app/**/*.ttf','app/**/*.woff']
+  styles : ['app/**/*.css','app/**/*.ttf','app/**/*.woff','app/**/*.png','app/**/*.jpg']
   styles_sass : ['app/**/*.sass']
 
 exports.NON_NPM_PKG = [
   {
     name: 'zepto'
-    components: ['zepto','deferred','callbacks','event']
+    components: ['zepto','deferred','callbacks','event','fx']
   }
 ]
 

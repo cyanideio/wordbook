@@ -1,4 +1,3 @@
-
 https = require 'https'
 fs = require 'fs'
 # HELPERS
