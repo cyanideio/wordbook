@@ -1,5 +1,5 @@
-# backbone-7
-Backbone.js under Framework7 \w Coffeescript, Gulp, Browserify, Sass
+# wordbook
+Application for Vocabulary Memorizing
 
 ## Getting Started
 
@@ -17,4 +17,4 @@ Backbone.js under Framework7 \w Coffeescript, Gulp, Browserify, Sass
 
 
 ## License
-Backbone-7 is distributed under [MIT license](http://mutedsolutions.mit-license.org/).
+wordbook is distributed under [MIT license](http://mutedsolutions.mit-license.org/).
