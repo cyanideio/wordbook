@@ -1,0 +1,146 @@
+/*Disable Select*/
+
+div
+  -webkit-touch-callout: none
+  /* iOS Safari*/
+  -webkit-user-select: none
+  /* Chrome/Safari/Opera*/
+  -khtml-user-select: none
+  /* Konqueror*/
+  -moz-user-select: none
+  /* Firefox*/
+  -ms-user-select: none
+  /* IE/Edge*/
+
+/*Alternative Fonts*/
+@font-face
+  font-family: "ScholarPaper"
+  src: url(fonts/PWScolarpaper.ttf) format("truetype")
+
+
+@font-face
+  font-family: "zhanku"
+  src: url(fonts/zhanku.ttf) format("truetype")
+
+
+@font-face
+  font-family: "kiwi"
+  src: url(fonts/kiwi.ttf) format("truetype")
+
+
+@font-face
+  font-family: "kingthings"
+  src: url(fonts/kingthings.ttf) format("truetype")
+
+
+/*KeyFrame Animations
+/*Animation to restore card brightness & contrast
+
+@keyframes card_restore
+  0%
+    filter: brightness(0.6)
+    filter: contrast(0.6)
+    -webkit-filter: brightness(0.6)
+    -webkit-filter: contrast(0.6)
+
+  100%
+    filter: brightness(1)
+    filter: contrast(1)
+    -webkit-filter: brightness(1)
+    -webkit-filter: contrast(1)
+
+
+/*Animation Execution Class*/
+.deck .card
+  &.restore-progress
+    animation-name: card_restore
+    animation-duration: 500ms
+  &.retored
+    filter: brightness(1)
+    filter: contrast(1)
+    -webkit-filter: brightness(1)
+    -webkit-filter: contrast(1)
+
+/*Body*/
+body
+  height: 100vh
+  margin: 0px
+
+/*CSS For the Deck*/
+.deck
+  height: 100%
+  width: 100%
+  background-color: gray
+  background: url(img/bg-1.jpg)
+
+.shadow
+  top: 0px
+  height: 100%
+  width: 100%
+  position: absolute
+
+/*The Card*/
+.card
+  width: 92.5%
+  left: 3.75vw
+  height: 45%
+  display: inline-block
+  position: absolute
+  text-align: center
+  font-family: sans-serif
+  font-size: 3rem
+  vertical-align: middle
+  line-height: 45vh
+
+.deck .card
+  background: url(img/card-texture-1.png)
+
+.shadow .card
+  background-color: black
+
+/*Single Unknwon Word*/
+.card
+  .vocabulary
+    color: #333333
+    font-family: "kingthings", sans-serif !important
+  .meaning
+    color: #333333
+    font-family: "zhanku", sans-serif !important
+    font-size: 1.4rem
+    padding: 10vw
+    display: inline-block
+    line-height: 1.5rem
+    text-align: center
+
+/*Meaning of the Unknown Word*/
+/*The Card Bottom*/
+.deck .card
+  &.bottom
+    z-index: 3
+    transform: rotateX(0deg)
+    transform-origin: 0 0
+    border-radius: 0 0 2vh 2vh
+    bottom: 5vh
+    border-top: 1px dashed gray
+  &.top
+    z-index: 3
+    transform: rotateX(0deg)
+    transform-origin: 100% 100%
+    border-radius: 2vh 2vh 0px 0px
+    top: 5vh
+
+/*The Card Top
+/*Shadow for Card at the Bottom*/
+.shadow .card
+  &.bottom
+    bottom: 5vh
+    z-index: 0
+    box-shadow: 1px 2px 5px 0px gray
+    border-radius: 0 0 2vh 2vh
+  &.top
+    top: 5vh
+    z-index: 0
+    border-radius: 2vh 2vh 0px 0px
+    box-shadow: 1px 1px 5px gray
+
+/*Shadow for Card at the Top*/
