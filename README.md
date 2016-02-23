@@ -17,4 +17,4 @@ Application for Vocabulary Memorizing
 
 
 ## License
-wordbook is distributed under [MIT license](http://mutedsolutions.mit-license.org/).
+This is private software
