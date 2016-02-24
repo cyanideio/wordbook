@@ -22,27 +22,27 @@ cardFlip = (selector)->
         metrics.deltaY = PageY - e.touches[0].pageY;
         metrics.deltaScale = metrics.deltaY / (winHeight*0.6) 
         metrics.deltaDX = metrics.deltaScale * 180;
+        brightness = Math.sin(2*Math.PI/360 * metrics.deltaDX) * 0.3
 
         # Adjust Card Lighting on the fly
         if metrics.deltaDX > 0
             $("#{selector} .card.bottom").css
                 'transform':"rotateX(#{metrics.deltaDX}deg)"
-                '-webkit-filter':"brightness(#{1 - metrics.deltaScale})"
-                'filter':"brightness(#{1 - metrics.deltaScale})"
+                '-webkit-filter':"brightness(#{1 - brightness})"
+                'filter':"brightness(#{1 - brightness})"
                 # '-webkit-filter':"contrast(#{1 - metrics.deltaScale})"
                 # 'filter':"contrast(#{1 - metrics.deltaScale})"
         else
             $("#{selector} .card.top").css
                 'transform':"rotateX(#{metrics.deltaDX}deg)"
-                '-webkit-filter':"brightness(#{1 + metrics.deltaScale})"
-                'filter':"brightness(#{1 + metrics.deltaScale})"
+                '-webkit-filter':"brightness(#{1 + brightness})"
+                'filter':"brightness(#{1 + brightness})"
                 # '-webkit-filter':"contrast(#{1 + metrics.deltaScale})"
                 # 'filter':"contrast(#{1 + metrics.deltaScale})"
 
         # Debug
         console.log(metrics.deltaX);
         console.log(metrics.deltaDX);
-        console.log(Math.sin(Math.PI)*metrics.deltaDX);
 
     # Call at Touch Start
     # e as event
