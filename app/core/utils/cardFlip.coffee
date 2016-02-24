@@ -24,22 +24,25 @@ cardFlip = (selector)->
         metrics.deltaDX = metrics.deltaScale * 180;
 
         # Adjust Card Lighting on the fly
-        if metrics.deltaDX >= 0
-            $("#{selector} .card.bottom").css('transform',"rotateX(#{metrics.deltaDX}deg)");
-            $("#{selector} .card.bottom").css('-webkit-filter',"brightness(#{1 - metrics.deltaScale})");
-            $("#{selector} .card.bottom").css('filter',"brightness(#{1 - metrics.deltaScale})");
-            $("#{selector} .card.bottom").css('-webkit-filter',"contrast(#{1 - metrics.deltaScale})");
-            $("#{selector} .card.bottom").css('filter',"contrast(#{1 - metrics.deltaScale})");
+        if metrics.deltaDX > 0
+            $("#{selector} .card.bottom").css
+                'transform':"rotateX(#{metrics.deltaDX}deg)"
+                '-webkit-filter':"brightness(#{1 - metrics.deltaScale})"
+                'filter':"brightness(#{1 - metrics.deltaScale})"
+                # '-webkit-filter':"contrast(#{1 - metrics.deltaScale})"
+                # 'filter':"contrast(#{1 - metrics.deltaScale})"
         else
-            $("#{selector} .card.top").css('transform',"rotateX(#{metrics.deltaDX}deg)");
-            $("#{selector} .card.top").css('-webkit-filter',"brightness(#{1 + metrics.deltaScale})");
-            $("#{selector} .card.top").css('filter',"brightness(#{1 + metrics.deltaScale})");
-            $("#{selector} .card.top").css('-webkit-filter',"contrast(#{1 + metrics.deltaScale})");
-            $("#{selector} .card.top").css('filter',"contrast(#{1 + metrics.deltaScale})");
+            $("#{selector} .card.top").css
+                'transform':"rotateX(#{metrics.deltaDX}deg)"
+                '-webkit-filter':"brightness(#{1 + metrics.deltaScale})"
+                'filter':"brightness(#{1 + metrics.deltaScale})"
+                # '-webkit-filter':"contrast(#{1 + metrics.deltaScale})"
+                # 'filter':"contrast(#{1 + metrics.deltaScale})"
 
         # Debug
         console.log(metrics.deltaX);
         console.log(metrics.deltaDX);
+        console.log(Math.sin(Math.PI)*metrics.deltaDX);
 
     # Call at Touch Start
     # e as event
@@ -54,14 +57,14 @@ cardFlip = (selector)->
         PageX = PageY = 0
         console.info 'touch ended'
         console.info metrics.deltaDX
-        if metrics.deltaDX >= 0
+        if metrics.deltaDX > 0
             $("#{selector} .card.bottom").animate {rotateX: '0deg'}, 500, 'ease-out', ->
-                $("#{selector} .card.bottom").css('-webkit-filter', 'contrast(1)')
+                $("#{selector} .card.bottom").css('-webkit-filter', 'brightness(1)')
                 $("#{selector} .card.bottom").removeClass('restore-progress')
             $("#{selector} .card.bottom").addClass('restore-progress')
         else
             $("#{selector} .card.top").animate {rotateX: '0deg'}, 500, 'ease-out', ->
-                $("#{selector} .card.top").css('-webkit-filter', 'contrast(1)')
+                $("#{selector} .card.top").css('-webkit-filter', 'brightness(1)')
                 $("#{selector} .card.top").removeClass('restore-progress')
             $("#{selector} .card.top").addClass('restore-progress')
 
