@@ -14,6 +14,7 @@ cardFlip = (selector)->
         deltaY: 0
         deltaScale: 0
         deltaDX: 0
+        AbsDeltaDX: 0
 
     ###*
      * Call at Touch Move
@@ -25,27 +26,39 @@ cardFlip = (selector)->
         metrics.deltaY = PageY - e.touches[0].pageY;
         metrics.deltaScale = metrics.deltaY / (winHeight*0.6) 
         metrics.deltaDX = metrics.deltaScale * 180;
+        metrics.AbsDeltaDX = Math.abs(metrics.deltaDX)
         brightness = Math.sin(2*Math.PI/360 * metrics.deltaDX) * 0.3
 
         # Adjust Card Lighting on the fly
         if metrics.deltaDX > 0
+            if not $("#{selector} .card.bottom").hasClass 'current_card'
+                $("#{selector} .card.bottom").addClass 'current_card'
             $("#{selector} .card.bottom").css
                 'transform':"rotateX(#{metrics.deltaDX}deg)"
                 '-webkit-filter':"brightness(#{1 - brightness})"
                 'filter':"brightness(#{1 - brightness})"
-                # '-webkit-filter':"contrast(#{1 - metrics.deltaScale})"
-                # 'filter':"contrast(#{1 - metrics.deltaScale})"
         else
+            if not $("#{selector} .card.top").hasClass 'current_card'
+                $("#{selector} .card.top").addClass 'current_card'
             $("#{selector} .card.top").css
                 'transform':"rotateX(#{metrics.deltaDX}deg)"
                 '-webkit-filter':"brightness(#{1 + brightness})"
                 'filter':"brightness(#{1 + brightness})"
-                # '-webkit-filter':"contrast(#{1 + metrics.deltaScale})"
-                # 'filter':"contrast(#{1 + metrics.deltaScale})"
 
-        # Debug
-        console.log(metrics.deltaX);
-        console.log(metrics.deltaDX);
+        if metrics.AbsDeltaDX >= 90
+            if metrics.deltaDX >= 0
+                if not $("#{selector} .card.current_card").hasClass 'top'
+                    $("#{selector} .card.bottom").addClass 'top'
+                console.info '1'
+            else
+                console.info '2'
+        else
+            if metrics.deltaDX >= 0
+                if not $("#{selector} .card.current_card").hasClass 'bottom'
+                    $("#{selector} .card.bottom").addClass 'bottom'
+                console.info '3'
+            else
+                console.info '4'
 
     # Call at Touch Start
     # e as event
@@ -59,18 +72,25 @@ cardFlip = (selector)->
     cardFlipEnd = (e)->
         PageX = PageY = 0
         console.info 'touch ended'
-        console.info metrics.deltaDX
-        if metrics.deltaDX > 0
-            $("#{selector} .card.bottom").animate {rotateX: '0deg'}, 500, 'ease-out', ->
-                $("#{selector} .card.bottom").css('-webkit-filter', 'brightness(1)')
-                $("#{selector} .card.bottom").removeClass('restore-progress')
-            $("#{selector} .card.bottom").addClass('restore-progress')
+        if metrics.AbsDeltaDX < 90
+            console.info 'within border'
+            if metrics.deltaDX > 0
+                $("#{selector} .card.bottom").animate {rotateX: '0deg'}, 500, 'ease-out', ->
+                    $("#{selector} .card.bottom").css('-webkit-filter', 'brightness(1)')
+                    $("#{selector} .card.bottom").removeClass('restore-progress')
+                $("#{selector} .card.bottom").addClass('restore-progress')
+            else
+                $("#{selector} .card.top").animate {rotateX: '0deg'}, 500, 'ease-out', ->
+                    $("#{selector} .card.top").css('-webkit-filter', 'brightness(1)')
+                    $("#{selector} .card.top").removeClass('restore-progress')
+                $("#{selector} .card.top").addClass('restore-progress')
         else
-            $("#{selector} .card.top").animate {rotateX: '0deg'}, 500, 'ease-out', ->
-                $("#{selector} .card.top").css('-webkit-filter', 'brightness(1)')
-                $("#{selector} .card.top").removeClass('restore-progress')
-            $("#{selector} .card.top").addClass('restore-progress')
-
+            if metrics.deltaDX >= 0
+                console.info 'over border'
+                $("#{selector} .card.bottom").animate {rotateX: '180deg'}, 500, 'ease-out', ->
+                    $("#{selector} .card.bottom").css('-webkit-filter', 'brightness(1)')
+                    $("#{selector} .card.bottom").removeClass('restore-progress')
+                $("#{selector} .card.bottom").addClass('restore-progress')
     # Bind Card Flip to Deck
     $(selector).bind('touchstart', cardFlipStart)
     $(selector).bind('touchend', cardFlipEnd)

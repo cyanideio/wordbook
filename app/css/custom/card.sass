@@ -101,8 +101,6 @@ body
 
 /*Single Unknwon Word*/
 .card
-  .hidden
-    display: none !important
   .vocabulary
     color: #333333
     font-family: "kingthings", sans-serif !important
@@ -118,19 +116,24 @@ body
 /*Meaning of the Unknown Word*/
 /*The Card Bottom*/
 .deck .card
+  transform-origin: 0 0
   &.bottom
-    z-index: 3
     transform: rotateX(0deg)
-    transform-origin: 0 0
     border-radius: 0 0 2vh 2vh
     bottom: 5vh
     border-top: 1px dashed gray
   &.top
-    z-index: 3
-    transform: rotateX(0deg)
-    transform-origin: 100% 100%
-    border-radius: 2vh 2vh 0px 0px
-    top: calc(5vh - 1px)
+    transform: rotateX(180deg)
+.deck .bottom
+  .vocabulary
+    display: inline-block
+  .meaning
+    display: none
+.deck .top
+  .meaning
+    display: inline-block
+  .vocabulary
+    display: none
 
 /*The Card Top
 /*Shadow for Card at the Bottom*/
