@@ -1,9 +1,9 @@
-# /** 
-#  * Flip the Card
-#  * E as Event 
-#  * component as jquery selector
-#  * pageX and pageY for moving point
-#  */
+###*
+* Flip the Card
+* E as Event 
+* component as jquery selector
+* pageX and pageY for moving point
+###
 cardFlip = (selector)->
     # Global PageX & PageY for recording
     PageX = PageY = 0;
@@ -15,8 +15,11 @@ cardFlip = (selector)->
         deltaScale: 0
         deltaDX: 0
 
-    # Call at Touch Move
-    # e as event
+    ###*
+     * Call at Touch Move
+     * @param  {e}
+     * @return {nothing}
+    ###
     cardFlipMove = (e)->
         metrics.deltaX = PageX - e.touches[0].pageX;
         metrics.deltaY = PageY - e.touches[0].pageY;
