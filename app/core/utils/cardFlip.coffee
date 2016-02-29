@@ -47,15 +47,17 @@ cardFlip = (selector)->
 
         if metrics.AbsDeltaDX >= 90
             if metrics.deltaDX >= 0
-                if not $("#{selector} .card.current_card").hasClass 'top'
-                    $("#{selector} .card.bottom").addClass 'top'
+                if not $("#{selector} .current_card").hasClass 'top'
+                    $("#{selector} .current_card").addClass 'top'
+                    $("#{selector} .current_card").removeClass 'bottom'
                 console.info '1'
             else
                 console.info '2'
         else
             if metrics.deltaDX >= 0
-                if not $("#{selector} .card.current_card").hasClass 'bottom'
-                    $("#{selector} .card.bottom").addClass 'bottom'
+                if not $("#{selector} .current_card").hasClass 'bottom'
+                    $("#{selector} .current_card").addClass 'bottom'
+                    $("#{selector} .current_card").removeClass 'top'
                 console.info '3'
             else
                 console.info '4'

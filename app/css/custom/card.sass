@@ -94,6 +94,10 @@ body
 
 .deck .card
   background: url(img/card-texture-1.png)
+  transform: rotateX(0deg)
+  border-radius: 0 0 2vh 2vh
+  bottom: 5vh
+  border-top: 1px dashed gray
 
 .shadow .card
   background: url(img/card-texture-1.png)
@@ -119,12 +123,10 @@ body
 .deck .card
   transform-origin: 0 0
   &.bottom
-    transform: rotateX(0deg)
-    border-radius: 0 0 2vh 2vh
-    bottom: 5vh
-    border-top: 1px dashed gray
+
   &.top
     transform: rotateX(180deg)
+
 .deck .bottom
   .vocabulary
     display: inline-block
