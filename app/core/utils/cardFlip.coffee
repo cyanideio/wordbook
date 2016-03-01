@@ -38,10 +38,11 @@ cardFlip = (selector)->
                 '-webkit-filter':"brightness(#{1 - brightness})"
                 'filter':"brightness(#{1 - brightness})"
         else
+            console.log metrics.deltaDX
             if not $("#{selector} .card.top").hasClass 'current_card'
                 $("#{selector} .card.top").addClass 'current_card'
             $("#{selector} .card.top").css
-                'transform':"rotateX(#{metrics.deltaDX}deg)"
+                'transform':"rotateX(#{180 + metrics.deltaDX}deg)"
                 '-webkit-filter':"brightness(#{1 + brightness})"
                 'filter':"brightness(#{1 + brightness})"
 
@@ -52,6 +53,9 @@ cardFlip = (selector)->
                     $("#{selector} .current_card").removeClass 'bottom'
                 console.info '1'
             else
+                if not $("#{selector} .current_card").hasClass 'bottom'
+                    $("#{selector} .current_card").addClass 'bottom'
+                    $("#{selector} .current_card").removeClass 'top'
                 console.info '2'
         else
             if metrics.deltaDX >= 0
@@ -60,6 +64,9 @@ cardFlip = (selector)->
                     $("#{selector} .current_card").removeClass 'top'
                 console.info '3'
             else
+                if not $("#{selector} .curren_card").hasClass 'top'
+                    $("#{selector} .current_card").addClass 'top'
+                    $("#{selector} .current_card").removeClass 'bottom'
                 console.info '4'
 
     # Call at Touch Start
@@ -82,14 +89,19 @@ cardFlip = (selector)->
                     $("#{selector} .card.bottom").removeClass('restore-progress')
                 $("#{selector} .card.bottom").addClass('restore-progress')
             else
-                $("#{selector} .card.top").animate {rotateX: '0deg'}, 500, 'ease-out', ->
+                $("#{selector} .card.top").animate {rotateX: '180deg'}, 500, 'ease-out', ->
                     $("#{selector} .card.top").css('-webkit-filter', 'brightness(1)')
                     $("#{selector} .card.top").removeClass('restore-progress')
                 $("#{selector} .card.top").addClass('restore-progress')
         else
             if metrics.deltaDX >= 0
                 console.info 'over border'
-                $("#{selector} .card.bottom").animate {rotateX: '180deg'}, 500, 'ease-out', ->
+                $("#{selector} .card.top").animate {rotateX: '180deg'}, 500, 'ease-out', ->
+                    $("#{selector} .card.top").css('-webkit-filter', 'brightness(1)')
+                    $("#{selector} .card.top").removeClass('restore-progress')
+                $("#{selector} .card.top").addClass('restore-progress')
+            else
+                $("#{selector} .card.bottom").animate {rotateX: '0deg'}, 500, 'ease-out', ->
                     $("#{selector} .card.bottom").css('-webkit-filter', 'brightness(1)')
                     $("#{selector} .card.bottom").removeClass('restore-progress')
                 $("#{selector} .card.bottom").addClass('restore-progress')
