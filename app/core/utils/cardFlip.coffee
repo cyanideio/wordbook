@@ -33,7 +33,7 @@ cardFlip = (selector)->
         if metrics.deltaDX > 0
             if not $("#{selector} .card.bottom").hasClass 'current_card'
                 $("#{selector} .card.bottom").addClass 'current_card'
-            $("#{selector} .card.bottom").css
+            $("#{selector} .card.current_card").css
                 'transform':"rotateX(#{metrics.deltaDX}deg)"
                 '-webkit-filter':"brightness(#{1 - brightness})"
                 'filter':"brightness(#{1 - brightness})"
@@ -47,7 +47,7 @@ cardFlip = (selector)->
 
         if metrics.AbsDeltaDX >= 90
             if metrics.deltaDX >= 0
-                if not $("#{selector} .current_card").hasClass 'top'
+                if not $("#{selector} .curren_card").hasClass 'top'
                     $("#{selector} .current_card").addClass 'top'
                     $("#{selector} .current_card").removeClass 'bottom'
                 console.info '1'
