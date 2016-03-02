@@ -41,7 +41,7 @@ cardFlip = (selector)->
             console.log metrics.deltaDX
             if not $("#{selector} .card.top").hasClass 'current_card'
                 $("#{selector} .card.top").addClass 'current_card'
-            $("#{selector} .card.top").css
+            $("#{selector} .card.current_card").css
                 'transform':"rotateX(#{180 + metrics.deltaDX}deg)"
                 '-webkit-filter':"brightness(#{1 + brightness})"
                 'filter':"brightness(#{1 + brightness})"
