@@ -27,7 +27,10 @@ cardFlip = (selector)->
         metrics.deltaScale = metrics.deltaY / (winHeight*0.6) 
         metrics.deltaDX = metrics.deltaScale * 180;
         metrics.AbsDeltaDX = Math.abs(metrics.deltaDX)
-        brightness = Math.sin(2*Math.PI/360 * metrics.deltaDX) * 0.3
+        fact = Math.sin(2*Math.PI/360 * metrics.deltaDX)
+        brightness = fact * 0.15
+        shadow = Math.abs(fact * 50)
+        console.log shadow
 
         # Adjust Card Lighting on the fly
         if metrics.deltaDX > 0
@@ -36,7 +39,8 @@ cardFlip = (selector)->
             $("#{selector} .card.current_card").css
                 'transform':"rotateX(#{metrics.deltaDX}deg)"
                 '-webkit-filter':"brightness(#{1 - brightness})"
-                'filter':"brightness(#{1 - brightness})"
+                'box-shadow':"0 #{shadow}px #{shadow}px rgba(0, 0, 0, 0.3)"
+                # 'filter':"brightness(#{1 - brightness})"
         else
             console.log metrics.deltaDX
             if not $("#{selector} .card.top").hasClass 'current_card'
@@ -44,7 +48,8 @@ cardFlip = (selector)->
             $("#{selector} .card.current_card").css
                 'transform':"rotateX(#{180 + metrics.deltaDX}deg)"
                 '-webkit-filter':"brightness(#{1 + brightness})"
-                'filter':"brightness(#{1 + brightness})"
+                'box-shadow':"0 #{shadow}px #{shadow}px rgba(0, 0, 0, 0.3)"
+                # 'filter':"brightness(#{1 + brightness})"
 
         if metrics.AbsDeltaDX >= 90
             if metrics.deltaDX >= 0
@@ -85,24 +90,33 @@ cardFlip = (selector)->
             console.info 'within border'
             if metrics.deltaDX > 0
                 $("#{selector} .card.bottom").animate {rotateX: '0deg'}, 500, 'ease-out', ->
-                    $("#{selector} .card.bottom").css('-webkit-filter', 'brightness(1)')
+                    $("#{selector} .card.bottom").css
+                        '-webkit-filter': 'brightness(1)'
+                        'box-shadow': '0 2px 2px rgba(0, 0, 0, 0.3)'
                     $("#{selector} .card.bottom").removeClass('restore-progress')
                 $("#{selector} .card.bottom").addClass('restore-progress')
             else
                 $("#{selector} .card.top").animate {rotateX: '180deg'}, 500, 'ease-out', ->
-                    $("#{selector} .card.top").css('-webkit-filter', 'brightness(1)')
+                    $("#{selector} .card.top").css
+                        '-webkit-filter': 'brightness(1)'
+                        'box-shadow': '0 2px 2px rgba(0, 0, 0, 0.3)'
+                    $("#{selector} .card.bottom").removeClass('restore-progress')
                     $("#{selector} .card.top").removeClass('restore-progress')
                 $("#{selector} .card.top").addClass('restore-progress')
         else
             if metrics.deltaDX >= 0
                 console.info 'over border'
                 $("#{selector} .card.top").animate {rotateX: '180deg'}, 500, 'ease-out', ->
-                    $("#{selector} .card.top").css('-webkit-filter', 'brightness(1)')
+                    $("#{selector} .card.top").css
+                        '-webkit-filter': 'brightness(1)'
+                        'box-shadow': '0 2px 2px rgba(0, 0, 0, 0.3)'
                     $("#{selector} .card.top").removeClass('restore-progress')
                 $("#{selector} .card.top").addClass('restore-progress')
             else
                 $("#{selector} .card.bottom").animate {rotateX: '0deg'}, 500, 'ease-out', ->
-                    $("#{selector} .card.bottom").css('-webkit-filter', 'brightness(1)')
+                    $("#{selector} .card.bottom").css
+                        '-webkit-filter': 'brightness(1)'
+                        'box-shadow': '0 2px 2px rgba(0, 0, 0, 0.3)'
                     $("#{selector} .card.bottom").removeClass('restore-progress')
                 $("#{selector} .card.bottom").addClass('restore-progress')
     # Bind Card Flip to Deck
