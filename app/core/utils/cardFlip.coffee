@@ -1,15 +1,19 @@
-
-
 ###*
 * Flip the Card
 * E as Event 
 * component as jquery selector
 * pageX and pageY for moving point
 ###
+
 cardFlip = (selector)->
     # Global PageX & PageY for recording
     PageX = PageY = 0;
+    ANIMATE_TIME = 500
+    FLIP_EFFECT = 'ease-out'
     winHeight = window.innerHeight;
+    ORIGIN_STYLE = 
+        '-webkit-filter': 'brightness(1)'
+        'box-shadow': '0 2px 2px rgba(0, 0, 0, 0.3)'
 
     metrics =
         deltaX: 0
@@ -40,6 +44,7 @@ cardFlip = (selector)->
         ###*
         * Consts
         ###
+
         SHADOW_STR = "0 #{shadow}px #{shadow}px rgba(0, 0, 0, 0.3)"
         if metrics.deltaDX >= 0
             console.log 'down to up'
@@ -54,43 +59,40 @@ cardFlip = (selector)->
 
         if (not MV_TARGET.hasClass 'current_card') and metrics.AbsDeltaDX < 90 and $('.current_card').length == 0
             MV_TARGET.addClass 'current_card'
+
+        CURRENT_CARD = $("#{selector} .card.current_card")
+        if metrics.AbsDeltaDX >= 90
+            if metrics.deltaDX > 0
+                CURRENT_CARD_ZINDEX = CURRENT_CARD.attr('id')
+                if not CURRENT_CARD.hasClass 'top'
+                    CURRENT_CARD.addClass 'top'
+                    CURRENT_CARD.removeClass 'bottom'
+                # console.info '1'
+            else
+                CURRENT_CARD_ZINDEX = CURRENT_CARD.attr('id') * -1
+                if not CURRENT_CARD.hasClass 'bottom'
+                    CURRENT_CARD.addClass 'bottom'
+                    CURRENT_CARD.removeClass 'top'
+                # console.info '2'
+        else
+            if metrics.deltaDX >= 0
+                CURRENT_CARD_ZINDEX = CURRENT_CARD.attr('id') * -1
+                if not CURRENT_CARD.hasClass 'bottom'
+                    CURRENT_CARD.addClass 'bottom'
+                    CURRENT_CARD.removeClass 'top'
+                # console.info '3'
+            else
+                CURRENT_CARD_ZINDEX = CURRENT_CARD.attr('id')
+                if not CURRENT_CARD.hasClass 'top'
+                    CURRENT_CARD.addClass 'top'
+                    CURRENT_CARD.removeClass 'bottom'
+                # console.info '4'
+
         $("#{selector} .card.current_card").css
             'transform':TRANSFORM_STR
             '-webkit-filter':BRIGHTNESS_STR
             'box-shadow': SHADOW_STR
-
-        CURRENT_CARD = $("#{selector} .card.current_card")
-        if metrics.AbsDeltaDX >= 90
-            CURRENT_CARD_ZINDEX = CURRENT_CARD.css('z-index')
-            if metrics.deltaDX > 0
-                if not CURRENT_CARD.hasClass 'top'
-                    if (CURRENT_CARD.css('z-index') < 0)
-                        CURRENT_CARD.css('z-index', CURRENT_CARD_ZINDEX * -1)
-                    CURRENT_CARD.addClass 'top'
-                    CURRENT_CARD.removeClass 'bottom'
-                console.info '1'
-            else
-                if not CURRENT_CARD.hasClass 'bottom'
-                    if (CURRENT_CARD.css('z-index') > 0)
-                        CURRENT_CARD.css('z-index', CURRENT_CARD_ZINDEX * -1)
-                    CURRENT_CARD.addClass 'bottom'
-                    CURRENT_CARD.removeClass 'top'
-                console.info '2'
-        else
-            if metrics.deltaDX >= 0
-                if not CURRENT_CARD.hasClass 'bottom'
-                    if (CURRENT_CARD.css('z-index') > 0)
-                        CURRENT_CARD.css('z-index', CURRENT_CARD_ZINDEX * -1)
-                    CURRENT_CARD.addClass 'bottom'
-                    CURRENT_CARD.removeClass 'top'
-                console.info '3'
-            else
-                if not CURRENT_CARD.hasClass 'top'
-                    if (CURRENT_CARD.css('z-index') < 0)
-                        CURRENT_CARD.css('z-index', CURRENT_CARD_ZINDEX * -1)
-                    CURRENT_CARD.addClass 'top'
-                    CURRENT_CARD.removeClass 'bottom'
-                console.info '4'
+            'z-index': CURRENT_CARD_ZINDEX
 
     # Call at Touch Start
     # e as event
@@ -105,41 +107,28 @@ cardFlip = (selector)->
         PageX = PageY = 0
         console.info 'touch ended'
         if metrics.AbsDeltaDX < 90
-            console.info 'within border'
             if metrics.deltaDX > 0
-                $("#{selector} .card.bottom").first().animate {rotateX: '0deg'}, 500, 'ease-out', ->
-                    $("#{selector} .current_card").removeClass('current_card')
-                    $("#{selector} .card.bottom").css
-                        '-webkit-filter': 'brightness(1)'
-                        'box-shadow': '0 2px 2px rgba(0, 0, 0, 0.3)'
-                    $("#{selector} .card.bottom").removeClass('restore-progress')
-                $("#{selector} .card.bottom").first().addClass('restore-progress')
+                ED_TARGET = $("#{selector} .card.bottom").first()
+                ROTATE_ORI = '0'
+                console.info 1
             else
-                $("#{selector} .card.top").last().animate {rotateX: '180deg'}, 500, 'ease-out', ->
-                    $("#{selector} .current_card").removeClass('current_card')
-                    $("#{selector} .card.top").css
-                        '-webkit-filter': 'brightness(1)'
-                        'box-shadow': '0 2px 2px rgba(0, 0, 0, 0.3)'
-                    $("#{selector} .card.top").first().removeClass('restore-progress')
-                $("#{selector} .card.top").last().addClass('restore-progress')
+                ED_TARGET = $("#{selector} .card.top").last()
+                ROTATE_ORI = '180'
+                console.info 2
         else
             if metrics.deltaDX >= 0
-                console.info 'over border'
-                $("#{selector} .current_card").animate {rotateX: '180deg'}, 500, 'ease-out', ->
-                    $("#{selector} .current_card").removeClass('current_card')
-                    $("#{selector} .card.top").css
-                        '-webkit-filter': 'brightness(1)'
-                        'box-shadow': '0 2px 2px rgba(0, 0, 0, 0.3)'
-                    $("#{selector} .card.top").removeClass('restore-progress')
-                $("#{selector} .current_card").addClass('restore-progress')
+                ED_TARGET = $("#{selector} .card.top").last()
+                ROTATE_ORI = '180'
+                console.info 3
             else
-                $("#{selector} .card.bottom").first().animate {rotateX: '0deg'}, 500, 'ease-out', ->
-                    $("#{selector} .current_card").removeClass('current_card')
-                    $("#{selector} .card.bottom").first().css
-                        '-webkit-filter': 'brightness(1)'
-                        'box-shadow': '0 2px 2px rgba(0, 0, 0, 0.3)'
-                    $("#{selector} .card.bottom").first().removeClass('restore-progress')
-                $("#{selector} .card.bottom").first().addClass('restore-progress')
+                ED_TARGET = $("#{selector} .card.bottom").first()
+                ROTATE_ORI = '0'
+                console.info 4
+        ED_TARGET.animate {rotateX: "#{ROTATE_ORI}deg"}, ANIMATE_TIME, FLIP_EFFECT, ->
+            $("#{selector} .current_card").removeClass('current_card')
+            ED_TARGET.css ORIGIN_STYLE
+            ED_TARGET.removeClass('restore-progress')
+        ED_TARGET.addClass('restore-progress')
 
     # Bind Card Flip to Deck
     $(selector).bind('touchstart', cardFlipStart)
