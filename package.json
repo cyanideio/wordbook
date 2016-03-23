@@ -23,6 +23,7 @@
     "gulp-sass":"*",
     "handlebars": "*",
     "hbsfy": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "swiper": "*"
   }
 }

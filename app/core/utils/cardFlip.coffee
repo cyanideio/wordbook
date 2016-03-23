@@ -44,55 +44,55 @@ cardFlip = (selector)->
         ###*
         * Consts
         ###
-
         SHADOW_STR = "0 #{shadow}px #{shadow}px rgba(0, 0, 0, 0.3)"
-        if metrics.deltaDX >= 0
-            console.log 'down to up'
-            MV_TARGET = $("#{selector} .card.bottom").first()
-            TRANSFORM_STR = "rotateX(#{metrics.deltaDX}deg)"
-            BRIGHTNESS_STR = "brightness(#{1 - brightness})"
-        else
-            console.log 'up to down'
-            MV_TARGET = $("#{selector} .card.top").last()
-            TRANSFORM_STR = "rotateX(#{180 + metrics.deltaDX}deg)"
-            BRIGHTNESS_STR = "brightness(#{1 + brightness})"
-
-        if (not MV_TARGET.hasClass 'current_card') and metrics.AbsDeltaDX < 90 and $('.current_card').length == 0
-            MV_TARGET.addClass 'current_card'
-
-        CURRENT_CARD = $("#{selector} .card.current_card")
-        if metrics.AbsDeltaDX >= 90
-            if metrics.deltaDX > 0
-                CURRENT_CARD_ZINDEX = CURRENT_CARD.attr('id')
-                if not CURRENT_CARD.hasClass 'top'
-                    CURRENT_CARD.addClass 'top'
-                    CURRENT_CARD.removeClass 'bottom'
-                # console.info '1'
+        if metrics.AbsDeltaDX <= 185 and metrics.AbsDeltaDX >= 0
+            if metrics.deltaDX >= 0 
+                # console.log 'down to up'
+                MV_TARGET = $("#{selector} .card.bottom").first()
+                TRANSFORM_STR = "rotateX(#{metrics.deltaDX}deg)"
+                BRIGHTNESS_STR = "brightness(#{1 - brightness})"
             else
-                CURRENT_CARD_ZINDEX = CURRENT_CARD.attr('id') * -1
-                if not CURRENT_CARD.hasClass 'bottom'
-                    CURRENT_CARD.addClass 'bottom'
-                    CURRENT_CARD.removeClass 'top'
-                # console.info '2'
-        else
-            if metrics.deltaDX >= 0
-                CURRENT_CARD_ZINDEX = CURRENT_CARD.attr('id') * -1
-                if not CURRENT_CARD.hasClass 'bottom'
-                    CURRENT_CARD.addClass 'bottom'
-                    CURRENT_CARD.removeClass 'top'
-                # console.info '3'
-            else
-                CURRENT_CARD_ZINDEX = CURRENT_CARD.attr('id')
-                if not CURRENT_CARD.hasClass 'top'
-                    CURRENT_CARD.addClass 'top'
-                    CURRENT_CARD.removeClass 'bottom'
-                # console.info '4'
+                # console.log 'up to down'
+                MV_TARGET = $("#{selector} .card.top").last()
+                TRANSFORM_STR = "rotateX(#{180 + metrics.deltaDX}deg)"
+                BRIGHTNESS_STR = "brightness(#{1 + brightness})"
 
-        $("#{selector} .card.current_card").css
-            'transform':TRANSFORM_STR
-            '-webkit-filter':BRIGHTNESS_STR
-            'box-shadow': SHADOW_STR
-            'z-index': CURRENT_CARD_ZINDEX
+            if (not MV_TARGET.hasClass 'current_card') and metrics.AbsDeltaDX < 90 and $('.current_card').length == 0
+                MV_TARGET.addClass 'current_card'
+
+            CURRENT_CARD = $("#{selector} .card.current_card")
+            if metrics.AbsDeltaDX >= 90
+                if metrics.deltaDX > 0
+                    CURRENT_CARD_ZINDEX = CURRENT_CARD.attr('id')
+                    if not CURRENT_CARD.hasClass 'top'
+                        CURRENT_CARD.addClass 'top'
+                        CURRENT_CARD.removeClass 'bottom'
+                    # console.info '1'
+                else
+                    CURRENT_CARD_ZINDEX = CURRENT_CARD.attr('id') * -1
+                    if not CURRENT_CARD.hasClass 'bottom'
+                        CURRENT_CARD.addClass 'bottom'
+                        CURRENT_CARD.removeClass 'top'
+                    # console.info '2'
+            else
+                if metrics.deltaDX >= 0
+                    CURRENT_CARD_ZINDEX = CURRENT_CARD.attr('id') * -1
+                    if not CURRENT_CARD.hasClass 'bottom'
+                        CURRENT_CARD.addClass 'bottom'
+                        CURRENT_CARD.removeClass 'top'
+                    # console.info '3'
+                else
+                    CURRENT_CARD_ZINDEX = CURRENT_CARD.attr('id')
+                    if not CURRENT_CARD.hasClass 'top'
+                        CURRENT_CARD.addClass 'top'
+                        CURRENT_CARD.removeClass 'bottom'
+                    # console.info '4'
+
+            $("#{selector} .card.current_card").css
+                'transform':TRANSFORM_STR
+                '-webkit-filter':BRIGHTNESS_STR
+                'box-shadow': SHADOW_STR
+                'z-index': CURRENT_CARD_ZINDEX
 
     # Call at Touch Start
     # e as event
@@ -110,20 +110,16 @@ cardFlip = (selector)->
             if metrics.deltaDX > 0
                 ED_TARGET = $("#{selector} .card.bottom").first()
                 ROTATE_ORI = '0'
-                console.info 1
             else
                 ED_TARGET = $("#{selector} .card.top").last()
                 ROTATE_ORI = '180'
-                console.info 2
         else
             if metrics.deltaDX >= 0
                 ED_TARGET = $("#{selector} .card.top").last()
                 ROTATE_ORI = '180'
-                console.info 3
             else
                 ED_TARGET = $("#{selector} .card.bottom").first()
                 ROTATE_ORI = '0'
-                console.info 4
         ED_TARGET.animate {rotateX: "#{ROTATE_ORI}deg"}, ANIMATE_TIME, FLIP_EFFECT, ->
             $("#{selector} .current_card").removeClass('current_card')
             ED_TARGET.css ORIGIN_STYLE

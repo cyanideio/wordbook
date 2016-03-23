@@ -7,21 +7,32 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <title>Remember</title>
         <!-- css -->
+        <link rel="stylesheet" href="css/swiper.min.css">
         <link rel="stylesheet" href="css/custom/card.css">
+        <link rel="stylesheet" href="css/custom/custom.css">
     </head>
     <body>
-        <div class="deck">
-            <div class="card bottom" style='z-index: -1;' id='1'> 
-                <span class="vocabulary"> Eloquent -1 </span>
-                <span class="meaning"> adj. 意味深长的；雄辩的，有口才的；有说服力的；动人的 -1 </span>
-            </div>
-            <div class="card bottom" style='z-index: -2;' id='2'> 
-                <span class="vocabulary"> Eloquent </span>
-                <span class="meaning"> adj. 意味深长的；雄辩的，有口才的；有说服力的；动人的 </span>
-            </div>
-            <div class="card bottom" style='z-index: -3;' id='3'> 
-                <span class="vocabulary"> Eloquent 1 </span>
-                <span class="meaning"> adj. 意味深长的；雄辩的，有口才的；有说服力的；动人的 1 </span>
+    <!-- Swiper -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">Slide 1</div>
+                <div class="swiper-slide" style="z-index:-100000;" id="center">
+                    <div class="deck">
+                        <div class="card bottom" style='z-index: -1;' id='1'> 
+                            <span class="vocabulary"> Eloquent -1 </span>
+                            <span class="meaning"> adj. 意味深长的；雄辩的，有口才的；有说服力的；动人的 -1 </span>
+                        </div>
+                        <div class="card bottom" style='z-index: -2;' id='2'> 
+                            <span class="vocabulary"> Eloquent </span>
+                            <span class="meaning"> adj. 意味深长的；雄辩的，有口才的；有说服力的；动人的 </span>
+                        </div>
+                        <div class="card bottom" style='z-index: -3;' id='3'> 
+                            <span class="vocabulary"> Eloquent 1 </span>
+                            <span class="meaning"> adj. 意味深长的；雄辩的，有口才的；有说服力的；动人的 1 </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">Slide 3</div>
             </div>
         </div>
     <!-- Path to your app js-->
