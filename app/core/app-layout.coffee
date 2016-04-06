@@ -1,9 +1,11 @@
 Backbone = require "backbone"
 Backbone.Marionette = require "backbone.marionette"
 
-module.exports = Backbone.Marionette.LayoutView.extend
+class AppLayout extends Backbone.Marionette.LayoutView
   el: "body"
   regions:
-    header: "#header"
-    content: "#content"
-    footer: "#footer"
+    left: ".left"
+    center: ".center"
+    right: ".right"
+
+module.exports = AppLayout

@@ -1,29 +1,30 @@
 Backbone = require "backbone"
 Backbone.$ = $
 Backbone.Marionette = require "backbone.marionette"
-
-AppLayout = require "./core/app-layout.coffee"
-HeaderView = require "./core/header/header-view.coffee"
-FooterView = require "./core/footer/footer-view.coffee"
-ContentView =  require "./core/content/content-view.coffee"
-cardFlip = require "./core/utils/cardFlip"
+_ = require "underscore"
+AppLayout = require "./core/app-layout"
+config = require "./core/utils/config"
 data = require "./core/utils/data"
 Swiper = require "swiper"
 
+CardCollection = require "./core/collections/card"
+CardCollectionView = require "./core/views/CardCollectionView"
+MenuItemView = require "./core/views/MenuItemView"
+
+$(document).ready ->
+  swiper = new Swiper config.MAIN_SWIPER_WRAPPER, config.MAIN_SWIPER_CONFIG
+
 app = new Backbone.Marionette.Application()
-
 app.addInitializer (options) ->
-  # Bind CardFlip to '.deck'
-  $(document).ready ->
-    swiper = new Swiper '.swiper-container'
-    cardFlip('.deck')
-  # AppLayout is bound to body element so we don't need to implicitly tell it
-  # to show in some element. It's done automatically on initialization
-  # app.root = new AppLayout()
-  # app.root.getRegion('header').show(new HeaderView())
-  # app.root.getRegion('footer').show(new FooterView())
-  # app.root.getRegion('content').show(new ContentView())
+  x = new CardCollection _.map data.split(' '), (w)->
+    word: w
+  cardCollectionView = new CardCollectionView
+    collection: x
+  menuItemView = new MenuItemView()
+  app.root = new AppLayout()
 
+  app.root.getRegion('center').show cardCollectionView
+  app.root.getRegion('left').show menuItemView
 
 $(document).ready ->
   app.start()

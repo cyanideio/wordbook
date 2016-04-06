@@ -12,27 +12,6 @@ div
   -ms-user-select: none
   /* IE/Edge*/
 
-/*Alternative Fonts*/
-@font-face
-  font-family: "ScholarPaper"
-  src: url(fonts/PWScolarpaper.ttf) format("truetype")
-
-
-@font-face
-  font-family: "zhanku"
-  src: url(fonts/zhanku.ttf) format("truetype")
-
-
-@font-face
-  font-family: "kiwi"
-  src: url(fonts/kiwi.ttf) format("truetype")
-
-
-@font-face
-  font-family: "kingthings"
-  src: url(fonts/kingthings.ttf) format("truetype")
-
-
 /*KeyFrame Animations
 /*Animation to restore card brightness & contrast
 
@@ -53,7 +32,7 @@ div
     animation-name: card_restore
     animation-duration: 500ms
   &.retored
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3) 
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) 
     filter: brightness(1)
     -webkit-filter: brightness(1)
 
@@ -64,6 +43,7 @@ body
 
 /*CSS For the Deck*/
 .deck
+  z-index: -100000
   height: 100%
   width: 100%
   background-color: none
@@ -79,21 +59,28 @@ body
   width: 92.5%
   left: 3.75vw
   height: 45%
-  display: inline-block
   position: absolute
+  display: none
   text-align: center
   font-family: sans-serif
   font-size: 2rem
   vertical-align: middle
   line-height: 45vh
 
+// .deck .card
 .deck .card
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3)
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1)
   background: url(img/card-texture-1.png)
   transform: rotateX(0deg)
   border-radius: 0 0 2vh 2vh
   bottom: 5vh
   border-top: 1px dashed black
+
+.card 
+  &.bottom:nth-child(-n+3)
+    display: inline-block
+  &.top:nth-last-child(n+3)
+    display: inline-block
 
 .shadow .card
   background: url(img/card-texture-1.png)
@@ -103,11 +90,12 @@ body
 .card
   .vocabulary
     color: #333333
-    font-family: "kingthings", sans-serif !important
+    font-family: Times New Roman !important
+    font-weight: bold
   .meaning
     transform: rotateX(180deg)
     color: #333333
-    font-family: "zhanku", sans-serif !important
+    font-family: sans-serif !important
     font-size: 1.4rem
     padding: 10vw
     display: inline-block
